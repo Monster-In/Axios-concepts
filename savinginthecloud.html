@@ -37,7 +37,7 @@
             //         document.body.innerHTML = document.body.innerHTML + "<h4> Something went wrong </h4>";
             //         console.log(err)
             //     })
-                axios.delete("https://crudcrud.com/api/3789226bdc0e4c86b94a3f96ef57ab30/appointmentdata",obj)
+                axios.delete("https://crudcrud.com/api/5818ff0c8090446d8868a3c8aebffb38/appointmentdata",obj)
                     .then((response)=>{
                         showNewUserOnScreen(response.data)
                     })
@@ -52,7 +52,7 @@
 
         window.addEventListener("DOMContentLoaded", () => {
             console.log("KK");
-            const data = axios.get("https://crudcrud.com/api/3789226bdc0e4c86b94a3f96ef57ab30/appointmentdata")
+            const data = axios.get("https://crudcrud.com/api/5818ff0c8090446d8868a3c8aebffb38/appointmentdata")
                 .then((response) => {
                     console.log(response)
                     for(var i=0;i<response.data.length;i++){
@@ -92,7 +92,7 @@
             const parentNode = document.getElementById('listOfUsers');
             const childHTML = `<li id=${user._id}> ${user.name} - ${user.email}
                                         <button onclick=deleteUser('${user._id}')> Delete User </button>
-                                        <button onclick=editUserDetails('${user._id}','${user.name}','${user.phonenumber}')>Edit User </button>
+                                        <button onclick=editUserDetails('${user.email}','${user.name}','${user.phonenumber}','${user._id}')>Edit User </button>
                                      </li>`
 
             parentNode.innerHTML = parentNode.innerHTML + childHTML;
@@ -100,18 +100,18 @@
 
         //Edit User
 
-        function editUserDetails(emailId, name, phonenumber) {
+        function editUserDetails(emailId, name, phonenumber,userId) {
             document.getElementById('email').value = emailId;
             document.getElementById('username').value = name;
             document.getElementById('phonenumber').value = phonenumber;
 
-            deleteUser(emailId)
+            deleteUser(userId)
         }
 
         // deleteUser('abc@gmail.com')
 
         function deleteUser(userId) {
-            axios.delete('https://crudcrud.com/api/3789226bdc0e4c86b94a3f96ef57ab30/appointmentdata/${userId}')
+            axios.delete('https://crudcrud.com/api/5818ff0c8090446d8868a3c8aebffb38/appointmentdata/${userId}')
                 .then((response)=>{
                     removeUserFromScreen(userId)
                     })
