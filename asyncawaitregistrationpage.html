@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge"></meta>
+    <title>Tej</title>
+</head>
+<body>
+    <script>
+        // console.log('person1: shows ticket');
+        // console.log('person2: shows ticket');
+        
+        // const promiseWifeBringingTicks = new Promise((resolve,reject) =>{
+        //     setTimeout(() =>{
+        //         resolve('ticket');
+        //     },3000)
+        // });
+
+        // const getPopcorn = promiseWifeBringingTicks.then((t) =>{
+        //     console.log('wife: I have the tics');
+        //     console.log('husband: we should go in');
+        //     console.log('wife: no I am hungry');
+        //     return new Promise((resolve,reject) => resolve(`${t} popcorn`))
+        // });
+
+        // const getButter=getPopcorn.then((t) =>{
+        //     console.log('husband: I got some popcorn');
+        //     console.log('husband: we should go in');
+        //     console.log('wife: I need butter on my popcorn');
+        //     return new Promise((resolve,reject) => resolve(`${t} butter`));
+        // });
+            
+            const getColdDrinks=getButter.then((t) => {
+                console.log(`husband: Hey! We forgot to buy drinks, just hold on for a minute , I will go and buy the drinks`);
+                console.log('husband: I bought the drinks, let us go');
+                console.log('Wife: Yeah!');
+                return  new Promise((resolve,reject) => resolve(`${t} drink`));
+            })
+
+        // getColdDrinks.then((t) => console.log(t));
+
+        // console.log('person4: shows ticket');
+        // console.log('person5: shows ticket');
+
+        const preMovie = async() =>{
+            const promiseWifeBringingTicks = 
+                new Promise((resolve,reject) =>{
+                    setTimeout(() => reject('ticket'),3000);
+                })
+
+            let ticket
+            try{
+                ticket= await promiseWifeBringingTicks;
+            }
+            catch(e){
+                ticket='sad face';
+            }
+            // const getPopcorn = new Promise((resolve,reject) => resolve('popcorn'));
+
+            // const addButter = new Promise((resolve,reject) => resolve('butter'));
+
+            // const getColdDrinks=new Promise((resolve,reject) => resolve('drinks'));
+
+            // let ticket = await promiseWifeBringingTicks;
+
+            // let [popcorn , butter, drinks] = await Promise.all([getPopcorn,addButter,getColdDrinks])
+
+            // console.log(`${popcorn}, ${butter}, ${drinks}`);
+
+            // console.log(`wife: I have the ${ticket}`);
+            // console.log('husband: we should go in');
+            // console.log('wife: no I am hungry');
+
+            // let popcorn = await getPopcorn;
+
+            // console.log(`husband: I got some ${popcorn}`);
+            // console.log('husband: we should go in');
+            // console.log('wife: I need butter on my popcorn');
+
+            // let butter = await addButter;
+
+            // console.log(`husband: I got some ${butter} on popcorn`);
+            // console.log('husband: anything else darling?');
+            // console.log('wife: lets got we are getting late');
+            // console.log('husband: thank you for the reminder *grins');
+
+            // let drinks = await getColdDrinks;
+            
+            // console.log(`husband: Hey! We forgot to buy drinks, just hold on for a minute , I will go and buy the drinks`);
+            // console.log('husband: I bought the drinks, let us go');
+            // console.log('Wife: Yeah!');
+            return ticket;
+        }
+
+        preMovie().then((m) => console.log(`person3: shows ${m}`));
+
+        console.log('person4: shows ticket');
+        console.log('person5: shows ticket');
+
+
+
+
+
+        const posts = [
+            { title: ' Post One ', body: ' This is post one ', createdAt: new Date().getTime() },
+            { title: ' Post Two ', body: ' This is post two ', createdAt: new Date().getTime() }
+        ];
+        let intervalID = 0;
+
+        function getPosts() {
+            clearInterval(intervalID);
+            intervalID=setInterval(() => {
+                let output = '';
+                for (let i = 0; i < posts.length; i++) {
+                    output += `<li> ${posts[i].title} - last updated ${Math.trunc((new Date().getTime() - posts[i].createdAt) / 1000)}</li>`
+                }
+                console.log("timer running ID=", intervalID);
+                document.body.innerHTML = output;
+                console.log("get post invoked");
+            }, 1000);
+        }
+
+        function createPost(post){
+            return new Promise((resolve,reject) => {
+                setTimeout(() =>{
+                    posts.push({ ...post, createdAt: new Date().getTime()});
+                    const error=false;
+                    if(!error){
+                        console.log("post three got created");
+                        resolve(posts);
+                    }
+                    else{
+                        reject("Error: Something went wrong");
+                    }
+                },1000);
+            });         
+        }
+
+        function deletePost(){
+            return new Promise((resolve,reject) => {
+                setTimeout(() =>{
+                    posts.pop();                  
+                    if(posts.length>0){
+                        resolve();
+                    }
+                    else{
+                        reject("Error : Array is empty now.");
+                    }
+                },3000);
+            });         
+        }
+
+
+        async function init(){
+            let msg = await createPost({title:"third post" , body:"body of third post" });
+            getPost();
+            console.log(msg);
+        }
+
+        async function deletePost(){
+            let msg = await deletePost();
+            getPost();
+            console.log(msg);
+        }
+
+        init();
+        deletePost();
+            
+    </script>
+</body>
+</html>
